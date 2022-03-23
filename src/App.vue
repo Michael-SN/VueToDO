@@ -13,7 +13,7 @@
         </div>
         <form @submit.prevent="addTodo(todo)">
           <div class="input-group">
-            <input type="text" v-model="todo.descripion" name="" id="" class="form-input" placeholder="New task">
+            <input type="text" v-model="todo.description" name="" id="" class="form-input" placeholder="New task">
             <button class="btn btn-primary input-group-btn">
               {{ btnText }}&nbsp;
               <i class="icon icon-plus" />
@@ -21,26 +21,7 @@
           </div>
         </form>
         <div class="todo-list">
-          <div v-for="t in todos" :key="t.id" class="line-task">
-            <div class="tile">
-              <div class="tile-icon">
-                <span class="d-flex">
-                  <i class="icon icon-time centered" />
-                </span>
-              </div>
-              <div class="tile-content">
-                <p class="tile-subtitle">{{ t.descripion }}</p>
-              </div>
-              <div class="tile-action">
-                <button class="btn btn-link">
-                  <i class="icon icon-check"/>
-                </button>
-                <button class="btn btn-link">
-                  <i class="icon icon-delete"/>
-                </button>
-              </div>
-            </div>
-          </div>
+          <todo v-for="{id, todo} in todos" :key="id" :todo="todo" />
         </div>
       </div>
     </div>
@@ -48,6 +29,9 @@
 </template>
 
 <script>
+
+import Todo from './components/toDo'
+
 
 export default {
   name: 'app',
@@ -61,10 +45,16 @@ export default {
       }
     }
   },
+  components: {
+    Todo
+  },
   methods: {
     addTodo(todo) {
-      todo.id = Date.now()
-      this.todos.push(todo)
+      const response = {
+        id: Date.now(),
+        todo
+      }
+      this.todos.push(response)
       this.todo = {checked: false}
       console.log(this.todo)
     }
@@ -87,21 +77,4 @@ export default {
 .todo-list {
   padding-top: 2rem;
 }
-
-.todo-list .tile {  
-  align-items: center;
-}
-
-.todo-list p {
-  margin-bottom: 0;
-}
-
-.todo-list i:not(icon-delete) {
-  color: #4341d4;
-}
-
-.todo-list i.icon-delete {
-  color: red;
-}
-
 </style>
