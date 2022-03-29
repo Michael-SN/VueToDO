@@ -1,5 +1,5 @@
 <template>
-  <div class="line-task px-2">
+  <div class="line-task px-2" :class="{checked: todo.checked}">
     <div class="tile">
       <div class="tile-icon">
         <span class="d-flex">
@@ -7,13 +7,21 @@
         </span>
       </div>
       <div class="tile-content">
-        <p class="tile-subtitle">{{ description }}</p>
+        <p class="tile-subtitle">{{ todo.description }}</p>
       </div>
       <div class="tile-action">
-        <button class="btn btn-link tooltip" @click="$emit('toggle', todo)" data-tooltip="Complete this task">
+        <button 
+          class="btn btn-link tooltip" 
+          @click="$emit('toggle', todo)" 
+          data-tooltip="Complete this task"
+        >
           <i class="icon icon-check"/>
         </button>
-        <button class="btn btn-link tooltip" data-tooltip="Delete this task">
+        <button 
+          class="btn btn-link tooltip" 
+          data-tooltip="Delete this task"
+          @click="$emit('remove', todo)"
+        >
           <i class="icon icon-delete"/>
         </button>
       </div>
@@ -30,17 +38,18 @@ export default {
       required: true
     }    
   },
-  computed: {
-    description: {
-      get () {
-        return `${this.todo.description} izau`
-      }
-    }
-  }   
 }
 </script>
 
 <style scoped>
+.line-task {
+  transition: all .2s linear;
+}
+.line-task.checked {
+  text-decoration: line-through;
+  color: #aeaeae;  
+  /* box-shadow: 0 3px 6px #cecefe inset; */
+}
 
 .line-task:hover {
   box-shadow: 0 3px 6px #cecefe;
