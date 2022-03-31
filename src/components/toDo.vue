@@ -1,5 +1,5 @@
 <template>
-  <div class="line-task px-2" :class="{checked: todo.checked}">
+  <div class="line-task px-2">
     <div class="tile">
       <div class="tile-icon">
         <span class="d-flex">
